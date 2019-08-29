@@ -39,8 +39,6 @@ const colorDOM = function(el) {
       let someColor = namedColors.colorNameList.find(
         color => color.hex === childNodeColor,
       );
-      console.log(childNodeColor);
-      // console.log(nearest(childNodeColor));
       div.innerHTML = nearest(childNodeColor).name;
       div.style = 'background-color: ' + childNodeColor;
     });
