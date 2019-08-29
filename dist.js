@@ -1,0 +1,1 @@
+console.error("\n/Users/Adam/Repos/color-compadre/src.js:3\nimport 'nearest-color';\n^\nParseError: 'import' and 'export' may appear only with 'sourceType: module'");

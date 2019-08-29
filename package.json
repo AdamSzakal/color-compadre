@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "chroma-js": "^2.0.6",
+    "color-name-list": "^4.10.0",
+    "nearest-color": "^0.4.4"
+  },
+  "name": "color-compadre",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/AdamSzakal/color-compadre.git",
+  "author": "Adam Szakal <adam.b.szakal@gmail.com>",
+  "license": "MIT"
+}
