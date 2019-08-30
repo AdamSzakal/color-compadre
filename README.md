@@ -1,1 +1,1 @@
-Gather the crowd, shout it aloud: `yarn && parcel index.html`!
+Gather the crowd, shout it aloud: `yarn && parcel index.html`
