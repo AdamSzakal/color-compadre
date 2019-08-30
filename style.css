@@ -31,6 +31,9 @@ section {
 }
 
 div {
+	transition: all .5s ease-out;
+	background-color: light-grey;
+	min-width: 7vw;
   display: flex;
   justify-content: center;
   align-items: center;

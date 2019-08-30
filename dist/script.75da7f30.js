@@ -58542,8 +58542,7 @@ var _chromaJs = _interopRequireDefault(require("chroma-js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+// initate variables
 var hueScale,
     lightnessScale,
     startingHue,
@@ -58558,15 +58557,7 @@ var colorInit = function colorInit() {
   startingHue = hueScale(0);
   endingHue = hueScale(1);
   return hueScale, startingHue, endingHue;
-};
-
-var colors = _colorNameList.default.colorNameList.reduce(function (o, _ref) {
-  var name = _ref.name,
-      hex = _ref.hex;
-  return Object.assign(o, _defineProperty({}, name, hex));
-}, {});
-
-var nearest = _nearestColor.default.from(colors); // do some stuff to prepare colorNameList entries to be used with nearestColor
+}; // color dom elements
 
 
 var colorDOM = function colorDOM(el) {
@@ -58583,11 +58574,23 @@ var colorDOM = function colorDOM(el) {
 
       var someColor = _colorNameList.default.colorNameList.find(function (color) {
         return color.hex === childNodeColor;
-      });
+      }); // Get color names from API
 
-      console.log(childNodeColor); // console.log(nearest(childNodeColor));
 
-      div.innerHTML = nearest(childNodeColor).name;
+      var request = new XMLHttpRequest();
+      request.open('GET', 'https://api.color.pizza/v1/' + childNodeColor.replace(/[^0-9]/, ''), true);
+
+      request.onload = function () {
+        var data = JSON.parse(this.response);
+
+        if (request.status >= 200 && request.status < 400) {
+          div.innerHTML = data.colors[0].name;
+        } else {
+          console.log('error');
+        }
+      };
+
+      request.send();
       div.style = 'background-color: ' + childNodeColor;
     });
   });
@@ -58595,7 +58598,7 @@ var colorDOM = function colorDOM(el) {
 
 colorInit();
 colorDOM(sections);
-},{"nearest-color":"node_modules/nearest-color/nearestColor.js","color-name-list":"node_modules/color-name-list/dist/colornames.umd.js","chroma-js":"node_modules/chroma-js/chroma.js"}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"nearest-color":"node_modules/nearest-color/nearestColor.js","color-name-list":"node_modules/color-name-list/dist/colornames.umd.js","chroma-js":"node_modules/chroma-js/chroma.js"}],"../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -58623,7 +58626,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64862" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64555" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -58798,5 +58801,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","script.js"], null)
+},{}]},{},["../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js","script.js"], null)
 //# sourceMappingURL=/script.75da7f30.js.map

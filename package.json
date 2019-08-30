@@ -2,6 +2,14 @@
   "devDependencies": {
     "chroma-js": "^2.0.6",
     "color-name-list": "^4.10.0",
+    "eslint": "^6.2.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-google": "^0.13.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.2.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "nearest-color": "^0.4.4",
     "parcel-bundler": "^1.12.3"
   }
