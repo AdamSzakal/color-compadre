@@ -58549,7 +58549,12 @@ var hueScale,
     startingHueName,
     endingHue,
     endingHueName,
-    sections = document.querySelectorAll('section'); // initiate colors to work with
+    sections = document.querySelectorAll('section'),
+    divs = document.querySelectorAll('div'),
+    swatches = document.querySelectorAll('.swatch'),
+    colorNames = document.querySelectorAll('.color-name'),
+    colorHexes = document.querySelectorAll('color-hex'); // ⚠️ Jag tänker här att man borde samla all data först, innan man börjar loopa igenom det. Frågan är bara hur man får en array för varje kolumn (section) så att man fortfarande får till ljushetsskiftningen
+// initiate colors to work with
 
 var colorInit = function colorInit() {
   hueScale = _chromaJs.default.scale([_chromaJs.default.random(), _chromaJs.default.random()]).mode('lch'); // The change in hue, going from left to right 👆
@@ -58561,12 +58566,11 @@ var colorInit = function colorInit() {
 
 
 var colorDOM = function colorDOM(el) {
-  document.querySelector('.first').innerHTML = ' 💄 ';
-  document.querySelector('.last').innerHTML = ' 💅 ';
   el.forEach(function (section, index) {
-    var currentColor = hueScale(index / el.length);
+    // generate a "base color" 👇
+    var currentColor = hueScale(index / el.length); // generate an array of colors going from white to black, via the "base color" 👇
 
-    var lightnessScale = _chromaJs.default.scale(['white', currentColor, 'black']).mode('lch'); // The change in lightness, going vertically 👆
+    var lightnessScale = _chromaJs.default.scale(['white', currentColor, 'black']).mode('lch'); // loop through all nodes for each section 👇
 
 
     section.childNodes.forEach(function (div, index) {
@@ -58584,7 +58588,7 @@ var colorDOM = function colorDOM(el) {
         var data = JSON.parse(this.response);
 
         if (request.status >= 200 && request.status < 400) {
-          div.innerHTML = data.colors[0].name;
+          div.innerHTML = "<p>" + data.colors[0].name + "</p>";
         } else {
           console.log('error');
         }
@@ -58598,7 +58602,7 @@ var colorDOM = function colorDOM(el) {
 
 colorInit();
 colorDOM(sections);
-},{"nearest-color":"node_modules/nearest-color/nearestColor.js","color-name-list":"node_modules/color-name-list/dist/colornames.umd.js","chroma-js":"node_modules/chroma-js/chroma.js"}],"../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"nearest-color":"node_modules/nearest-color/nearestColor.js","color-name-list":"node_modules/color-name-list/dist/colornames.umd.js","chroma-js":"node_modules/chroma-js/chroma.js"}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -58626,7 +58630,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64555" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50105" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -58801,5 +58805,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js","script.js"], null)
+},{}]},{},["../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","script.js"], null)
 //# sourceMappingURL=/script.75da7f30.js.map
