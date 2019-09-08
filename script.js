@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // clear selected colors, initate new colors and color dom again
     const reload = function () {
-        clear;
+        clear();
         colorInit();
         colorDOM(sections);
     }
@@ -112,6 +112,5 @@ document.addEventListener("DOMContentLoaded", function () {
     copyButton.addEventListener('click', copy);
     reloadButton.addEventListener('click', reload);
     clearButton.addEventListener('click', clear);
-
 
 });
