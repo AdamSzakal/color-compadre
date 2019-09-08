@@ -58544,16 +58544,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // initate variables
 var hueScale,
-    lightnessScale,
     startingHue,
-    startingHueName,
     endingHue,
-    endingHueName,
-    sections = document.querySelectorAll('section'),
-    divs = document.querySelectorAll('div'),
-    swatches = document.querySelectorAll('.swatch'),
-    colorNames = document.querySelectorAll('.color-name'),
-    colorHexes = document.querySelectorAll('color-hex'); // ⚠️ Jag tänker här att man borde samla all data först, innan man börjar loopa igenom det. Frågan är bara hur man får en array för varje kolumn (section) så att man fortfarande får till ljushetsskiftningen
+    selectedColors = [];
+var sections = document.querySelectorAll('section'),
+    divs = document.querySelectorAll('div'); // ⚠️ Jag tänker här att man borde samla all data först, innan man börjar loopa igenom det. Frågan är bara hur man får en array för varje kolumn (section) så att man fortfarande får till ljushetsskiftningen
 // initiate colors to work with
 
 var colorInit = function colorInit() {
@@ -58588,20 +58583,68 @@ var colorDOM = function colorDOM(el) {
         var data = JSON.parse(this.response);
 
         if (request.status >= 200 && request.status < 400) {
-          div.innerHTML = "<p>" + data.colors[0].name + "</p>";
+          div.innerText = data.colors[0].name;
+          div.style.backgroundColor = childNodeColor;
         } else {
           console.log('error');
         }
       };
 
       request.send();
-      div.style = 'background-color: ' + childNodeColor;
     });
   });
 };
 
-colorInit();
-colorDOM(sections);
+document.addEventListener("DOMContentLoaded", function () {
+  colorInit();
+  colorDOM(sections); //interaction with UI
+  // the function to be run on click
+
+  var selectColor = function selectColor(e) {
+    console.log("color selected");
+    e.target.classList.toggle("selected");
+    addToSelectedColors(e);
+  }; // highlight selected color and add to array
+
+
+  var addToSelectedColors = function addToSelectedColors(e) {
+    console.log("added");
+    selectedColors.push(e.target); // get the markup for each of the DOM elements in the selectedColors array
+
+    document.querySelector("#selected-colors").innerHTML = selectedColors.map(function (target) {
+      return target.outerHTML;
+    }).join(" ");
+  }; // Clear selection, both visually and data-wise
+
+
+  var clear = function clear() {
+    console.log("cleared");
+    selectedColors.map(function (target) {
+      return target.classList.remove("selected");
+    });
+    document.querySelector("#selected-colors").innerHTML = "No selected colors";
+    selectedColors = [];
+  }; // clear selected colors, initate new colors and color dom again
+
+
+  var reload = function reload() {
+    clear;
+    colorInit();
+    colorDOM(sections);
+  }; //add event listener to all divs 
+
+
+  divs.forEach(function (div) {
+    div.addEventListener('click', selectColor);
+  }); // add event listener to buttons
+
+  var copyButton = document.querySelector("#copy"),
+      reloadButton = document.querySelector("#reload"),
+      clearButton = document.querySelector("#clear");
+  copyButton.addEventListener('click', copy);
+  reloadButton.addEventListener('click', reload);
+  clearButton.addEventListener('click', clear);
+});
 },{"nearest-color":"node_modules/nearest-color/nearestColor.js","color-name-list":"node_modules/color-name-list/dist/colornames.umd.js","chroma-js":"node_modules/chroma-js/chroma.js"}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -58630,7 +58673,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50105" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55118" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
