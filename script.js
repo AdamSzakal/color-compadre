@@ -1,116 +1,81 @@
-import nearestColor from 'nearest-color';
-import namedColors from 'color-name-list';
 import Chroma from 'chroma-js';
 
 // initate variables
-let hueScale,
-    startingHue,
-    endingHue,
-    selectedColors = [];
+let selectedColors = [],
+    responseData = [];
+const colors = [],
+    colorNames = [],
+    columns = document.querySelectorAll('section'),
+    containers = document.querySelectorAll('.container'),
+    colorContainers = document.querySelectorAll('.color'),
+    nameContainers = document.querySelectorAll('.name'),
+    hexContainers = document.querySelectorAll('.hex'),
+    noOfColumns = columns.length,
+    noOfRows = containers.length / noOfColumns;
 
-const sections = document.querySelectorAll('section'),
-    divs = document.querySelectorAll('div');
-
-// ⚠️ Jag tänker här att man borde samla all data först, innan man börjar loopa igenom det. Frågan är bara hur man får en array för varje kolumn (section) så att man fortfarande får till ljushetsskiftningen
 
 // initiate colors to work with
 const colorInit = function () {
-    hueScale = Chroma.scale([Chroma.random(), Chroma.random()]).mode('lch');
-    // The change in hue, going from left to right 👆
-    startingHue = hueScale(0);
-    endingHue = hueScale(1);
-    return hueScale, startingHue, endingHue;
+
+    const colorFunc = Chroma.scale([Chroma.random(), Chroma.random()]).mode('lch');
+    // The function to generate the random color scale
+
+    let startingColor = colorFunc(0);
+    let endingColor = colorFunc(1);
+
+    const getColors = function () {
+
+        //get base hue for each column, then generate the color scale to black/white for each
+        for (let i = 0; i < noOfColumns; i++) {
+            let columnBaseColor = colorFunc(i / noOfColumns);
+            let columnLightnessScale = Chroma.scale(['white', columnBaseColor, 'black']).mode('lch')
+            let columnColors = [];
+            for (let j = 0; j < noOfRows; j++) {
+                columnColors.push(columnLightnessScale(j / noOfRows + 0.05).hex());
+            }
+            colors[i] = columnColors;
+        }
+    }
+
+    getColors();
 };
 
-// color dom elements
-const colorDOM = function (el) {
 
-    el.forEach(function (section, index) {
-        // generate a "base color" 👇
-        let currentColor = hueScale(index / el.length);
-        // generate an array of colors going from white to black, via the "base color" 👇
-        const lightnessScale = Chroma.scale(['white', currentColor, 'black']).mode(
-            'lch',
-        );
+const getColorNames = function () {
 
-        // loop through all nodes for each section 👇
-        section.childNodes.forEach(function (div, index) {
+    // Get color names from API
 
-            let childNodeColor = Chroma(
-                lightnessScale(index / section.childNodes.length)
-            ).hex();
+    let flatColors = colors.join(",");
+    console.log(flatColors)
+    let reqCol = flatColors.replace(/#/g, '');
 
-            let someColor = namedColors.colorNameList.find(
-                color => color.hex === childNodeColor
-            );
+    let request = new XMLHttpRequest();
+    request.open('GET', 'https://api.color.pizza/v1/' + reqCol, true);
+    request.onload = function () {
+        responseData = JSON.parse(this.response).colors;
+        console.log(responseData);
+        if (request.status >= 200 && request.status < 400) {} else {
+            console.log('error');
+        }
+    };
+    request.send();
 
-            // Get color names from API
-            let request = new XMLHttpRequest();
-            request.open('GET', 'https://api.color.pizza/v1/' + childNodeColor.replace(/[^0-9]/, ''), true);
-            request.onload = function () {
-                let data = JSON.parse(this.response);
-                if (request.status >= 200 && request.status < 400) {
-                    div.innerText = data.colors[0].name;
-                    div.style.backgroundColor = childNodeColor;
-                } else {
-                    console.log('error');
-                }
-            };
-            request.send();
-        });
-    });
-};
+}
 
+
+// use colors on DOM
+const colorDOM = function () {
+    let counter = 0;
+    for (let i = 0; i < colors.length; i++) {
+        for (let j = 0; j < colors[i].length; j++) {
+            colorContainers[counter].style.backgroundColor = colors[i][j];
+            counter++;
+        }
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     colorInit();
-    colorDOM(sections);
-
-    //interaction with UI
-
-
-    // the function to be run on click
-    const selectColor = function (e) {
-        console.log("color selected");
-        e.target.classList.toggle("selected");
-        addToSelectedColors(e);
-    }
-
-    // highlight selected color and add to array
-    const addToSelectedColors = function (e) {
-        console.log("added");
-        selectedColors.push(e.target);
-        // get the markup for each of the DOM elements in the selectedColors array
-        document.querySelector("#selected-colors").innerHTML = selectedColors.map(target => target.outerHTML).join(" ");
-    }
-
-    // Clear selection, both visually and data-wise
-    const clear = function () {
-        console.log("cleared");
-        selectedColors.map(target => target.classList.remove("selected"));
-        document.querySelector("#selected-colors").innerHTML = "No selected colors";
-        selectedColors = [];
-    }
-
-    // clear selected colors, initate new colors and color dom again
-    const reload = function () {
-        clear();
-        colorInit();
-        colorDOM(sections);
-    }
-
-    //add event listener to all divs 
-    divs.forEach(function (div) {
-        div.addEventListener('click', selectColor);
-    });
-
-    // add event listener to buttons
-    const copyButton = document.querySelector("#copy"),
-        reloadButton = document.querySelector("#reload"),
-        clearButton = document.querySelector("#clear");
-
-    copyButton.addEventListener('click', copy);
-    reloadButton.addEventListener('click', reload);
-    clearButton.addEventListener('click', clear);
-
+    getColorNames();
+    colorDOM();
 });
