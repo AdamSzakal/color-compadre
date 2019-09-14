@@ -1,10 +1,8 @@
 import Chroma from 'chroma-js';
 
 // initate variables
-let selectedColors = [],
-    responseData = [];
+let responseData = [];
 const colors = [],
-    colorNames = [],
     columns = document.querySelectorAll('section'),
     containers = document.querySelectorAll('.container'),
     colorContainers = document.querySelectorAll('.color'),
@@ -53,22 +51,25 @@ const getColorNames = function () {
     request.open('GET', 'https://api.color.pizza/v1/' + reqCol, true);
     request.onload = function () {
         responseData = JSON.parse(this.response).colors;
-        console.log(responseData);
-        if (request.status >= 200 && request.status < 400) {} else {
-            console.log('error');
+        if (request.status >= 200 && request.status < 400) {
+            responseData.forEach(function (currentValue, index) {
+                nameContainers[index].innerHTML = currentValue.name;
+                hexContainers[index].innerHTML = currentValue.hex;
+            });
+        } else {
+            console.log(error);
         }
     };
     request.send();
 
 }
 
-
 // use colors on DOM
 const colorDOM = function () {
     let counter = 0;
     for (let i = 0; i < colors.length; i++) {
         for (let j = 0; j < colors[i].length; j++) {
-            colorContainers[counter].style.backgroundColor = colors[i][j];
+            colorContainers[counter].style.backgroundColor = colors[j][i];
             counter++;
         }
     }
