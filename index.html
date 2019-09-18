@@ -5,11 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8" />
     <title>Color Compadre</title>
+    <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
     <h1>colorCompadre(🏳‍🌈)</h1>
+    <header>
+        <!-- <aside id="selected-colors">
+            <p>
+                No selected colors
+            </p>
+        </aside> -->
+        <aside>
+            <!-- <label for="darkmodetoggle">Dark Mode</label>
+            <input type="checkbox" id="darkmodetoggle"> -->
+            <button id="reload">
+                Reload colors
+            </button>
+            <button disabled id="copy">
+                Copy selected colors to clipboard
+            </button>
+            <button disabled id="clear">
+                Clear selection
+            </button>
+        </aside>
+    </header>
     <main>
         <section class="column">
             <div class="container">
@@ -382,24 +403,6 @@
         </section>
 
     </main>
-    <!-- <footer>
-        <aside id="selected-colors">
-            <p>
-                No selected colors
-            </p>
-        </aside>
-        <aside>
-            <button disabled id="copy">
-                Copy selected colors to clipboard
-            </button>
-            <button id="reload">
-                Reload colors
-            </button>
-            <button id="clear">
-                Clear selection
-            </button>
-        </aside>
-    </footer> -->
 
     <!-- <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="200" height="200" rx="4" fill="#C4C4C4" />

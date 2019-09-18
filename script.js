@@ -9,7 +9,10 @@ const colors = [],
     nameContainers = document.querySelectorAll('.name'),
     hexContainers = document.querySelectorAll('.hex'),
     noOfColumns = columns.length,
-    noOfRows = containers.length / noOfColumns;
+    noOfRows = containers.length / noOfColumns,
+    reloadBtn = document.querySelector("#reload"),
+    darkModeToggle = document.querySelector("#darkmodetoggle"),
+    copyBtn = document.querySelector("#copy");
 
 
 // initiate colors to work with
@@ -44,7 +47,6 @@ const getColorNames = function () {
     // Get color names from API
 
     let flatColors = colors.join(",");
-    console.log(flatColors)
     let reqCol = flatColors.replace(/#/g, '');
 
     let request = new XMLHttpRequest();
@@ -61,7 +63,6 @@ const getColorNames = function () {
         }
     };
     request.send();
-
 }
 
 // use colors on DOM
@@ -74,9 +75,33 @@ const colorDOM = function () {
         }
     }
 }
+// initate app
+const init = function () {
+    document.addEventListener("DOMContentLoaded", function () {
+        colorInit();
+        getColorNames();
+        colorDOM();
+    });
+};
 
-document.addEventListener("DOMContentLoaded", function () {
+// make stuff interactive
+reloadBtn.addEventListener('click', function (e) {
+    // init();
     colorInit();
     getColorNames();
     colorDOM();
+
 });
+
+// const toggleDarkMode = function() {
+//     darkModeToggle.addEventListener('click', function (e) {
+//         if (darkModeToggle.checked == true) {
+//             document.querySelector("html").classList.toggle("dark");
+//             console.log("asdaf");
+//         } else {
+//             console.log("ajsdajksdnasd");
+//         }
+//     });
+// };
+
+init();
