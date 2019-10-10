@@ -1,0 +1,1773 @@
+/* At all times this file should contain a comment or a rule, otherwise opera might act buggy */
+/* All css-regler här kommer att skriva över reglerna från Propulsions css-filer då denna filen laddas sist */
+
+/*
+To apply a CSS rule to elements that match two (or more) selectors, list the selectors without any separating spaces or commas:
+.class64.class2 { border: 0; }
+This will apply the style to elements that have both classes (an AND operation). 
+http://ss64.com/css/syntax-class-id.html
+
+Basically, being separated by a space implies two elements with a descendant relationship.
+http://anvilstudios.co.za/blog/2010/08/13/how-to-target-an-element-with-multiple-classes-in-css/
+http://stackoverflow.com/questions/10036156/whats-the-difference-between-css-classes-foo-bar-without-space-and-foo-bar
+
+#Innehållsförteckning
+1. Generiska ändringar
+2. Header
+3. Sidebar
+4. Startsidan
+5. Produktlistning kategorivy
+6. Produktlistning singel produkt
+7. Kassasidor
+8. Posts / Nyheter
+9. Footer
+10. Media queries
+
+*/
+
+/**** 1. GENERISKA ÄNDRINGAR ****/
+
+#top a.button.wc-forward {
+    color: #000 !important;
+}
+
+span.select2-chosen {
+    color: #999 !important;
+}
+
+p a {
+    color: #15c !important;
+}
+
+/* färg knappar */
+#top input[type="submit"] {
+    color: #000;
+}
+
+/* Fixar att inte drop down kat meny blir avhuggen */
+select.dropdown_product_cat {
+    margin: 0;
+    min-width: 0;
+    width: 95%;
+}
+
+/*rött inte grönt kryss på ta bort produkt, kundvagnen */
+#top a.remove {
+    background-color: #F00 !important;
+}
+
+/* göm linje mellan widgets*/
+.sidebar .widget .seperator {
+    display: none;
+    border-bottom: 0 !important;
+}
+
+/* grön färg på top header bar */
+#shop_header {
+    background-color: #aec71e;
+}
+
+/* Krympa höjden på produkttipsraden "Du kanske också gillar", på produktsidorna*/
+/*
+.related .thumbnail_container_inner_ { height: 150px!important;}
+.upsells .thumbnail_container_inner_ { height: 150px!important;}
+*/
+
+/* Fix för att få in tre Du kanske också gillar på en rad */
+#top .product_column_3 .products .product {
+    width: 30.6%;
+}
+
+/* Mindre rubiker */
+h1 {
+    font-size: 30px;
+}
+
+#top .meta-color, div .meta-color a, .main_menu ul li a, #top .comment-container a, #top .widget ul li a, .minitext, .form-allowed-tags, div .pagination, #comments span, .minitext, .commentmetadata a, .blog-tags, .blog-tags a, .title_container #s, .wp-caption, blockquote:before, blockquote:after, blockquote small, blockquote cite, .hero-text, .js_active .tab, .news-time, .contentSlideControlls a, #js_sort_items a, .text-sep, .template-search a.post-entry .news-excerpt, ul.borderlist > li, .post_nav, .quote-content, #top .widget_nav_menu li, .tweet-time, #top .avia_parnter_empty, .avia_socialcount a span, td, #top th.nobg, caption, .page-title {
+    color: #333 !important;
+}
+
+*
+
+/
+.title_container {
+    display: none;
+}
+
+#top div.woocommerce_message {
+    background-color: #e0f1b5;
+    background-image: url("../images/icons/tick.png");
+    border-color: #8baf5b;
+    color: #4f5f39;
+}
+
+#top div.woocommerce_error, #top div.woocommerce_message {
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0 0 23px;
+    padding: 10px 10px 10px 32px;
+}
+
+/* header. positionerar logon i linje med menyn */
+.logo, .logo a {
+    padding-top: 2px;
+}
+
+.logo {
+    margin-right: 20px;
+}
+
+/* registrera konto. färg på ram runt registera formulär samt knappen innanför ramen*/
+form.register, form.login {
+    border-color: #e1e1e1;
+    overflow: hidden;
+}
+
+/* registrera konto. flytta upp raden och linje med kryssrutan*/
+p.alo_easymail_reg_optin label {
+    display: inline;
+}
+
+.lost_reset_password {
+    width: 65.5%
+}
+
+.tva_tredjedelar {
+    width: 65.5%
+}
+
+/* snabborder */
+.widget_wc_fast_order_widget {
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 20px 0;
+    padding: 20px;
+    text-align: left;
+    border-color: #e1e1e1;
+}
+
+.wc_fast_order_add_to_cart_form .button {
+    margin-top: 14px !important;
+}
+
+.post-top-space {
+    padding-top: 10px;
+    display: block;
+}
+
+/* svenska citattecken*/
+blockquote {
+    font-size: 1.1em;
+    quotes: "\201D" "\201D";
+}
+
+.template-blog .entry-content, .summary-main-content {
+    font: 14px/1.65em Georgia, "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/**** 2. HEADER ****/
+
+#top .main_menu .menu li:first-child a {
+
+}
+
+/* Inga understrykna länkar på top menyn */
+.menu-customer-navigation-container a, .cart_dropdown_first a {
+    text-decoration: none;
+}
+
+/* stänger propulsion default woocommerce_catalog_ordering */
+.title_container .woocommerce-ordering {
+    display: none;
+}
+
+/* sortings drop-down på rätt ställa */
+#top .woocommerce-ordering {
+    margin: 0 -8px 0 0;
+    padding: 5px 0;
+    float: right;
+    min-width: 200px;
+    position: relative;
+}
+
+/* Logo placering */
+#header .container {
+    padding: 30px 0 1px 0;
+}
+
+#header .container {
+    min-height: 30px;
+    display: flex;
+}
+
+#header .logo {
+    /*flex: initial;*/
+}
+
+#header .header-sidebar {
+    /*flex: initial;*/
+}
+
+#header .main_menu {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#header .main_menu .menu ul {
+    left: auto;
+    right: 0;
+}
+
+#header .main_menu .menu > li > a {
+    color: #000080 !important;
+    font: 12px/17px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-bottom: 10px;
+}
+
+#header div .main_menu ul:first-child > li.current-menu-item > a {
+    border-bottom: 0;
+}
+
+#header .main_menu .menu li ul ul {
+    left: -190px;
+}
+
+#header {
+    margin-bottom: 20px;
+}
+
+/* Header Widget area */
+.header-sidebar {
+    position: relative;
+    margin-left: 20px;
+}
+
+.header-sidebar #s {
+    box-sizing: border-box;
+    width: 460px;
+}
+
+@media screen and (max-width: 767px) {
+    .header-sidebar {
+        display: none;
+    }
+}
+
+/* Menyer placering */
+.main_menu {
+    top: 10px;
+    height: 25px;
+}
+
+.sub_menu {
+    font-size: 12px;
+}
+
+/* linje som avdelare */
+.avdelare {
+    border-top: 1px solid #E1E1E1;
+    clear: both;
+    line-height: 13px;
+    overflow: hidden;
+    padding: 10px 0 10px;
+    margin-top: 10px;
+    position: relative;
+    z-index: 3;
+}
+
+.avdelare-top {
+    border-top: 1px solid #E1E1E1;
+    clear: both;
+    line-height: 13px;
+    overflow: hidden;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* paginering */
+.pagination-top {
+    padding: 15px 0 5px 0;
+    color: #666;
+    line-height: 13px;
+    float: left;
+}
+
+.pagination-top span, .pagination-top a {
+    display: block;
+    float: left;
+    font-size: 11px;
+    line-height: 13px;
+    padding: 2px 9px 1px 9px;
+    text-decoration: none;
+    width: auto;
+    border-right: 1px solid;
+}
+
+#top .pagination-top .current {
+    font-size: 11px;
+    padding: 1px 9px 1px 9px;
+    font-weight: bold;
+}
+
+#top .pagination-top a:hover {
+    text-decoration: underline;
+}
+
+.pagination-top .pagination-meta {
+    float: right;
+    border-left: 1px solid;
+    border-right: none;
+}
+
+.pagination-top *:last-child {
+    border: none;
+}
+
+/* flyttar upp linjen under rubriken */
+h1.page-title {
+    margin-bottom: 0px;
+}
+
+h1.yta {
+    margin-top: -8px;
+    padding: 11px 340px 12px 0;
+}
+
+/* menyer typsnitt */
+.main_menu {
+    top: 10px;
+    height: 25px;
+}
+
+.sub_menu {
+    font-size: 12px;
+}
+
+.title_container {
+    border-bottom: 0px solid;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    position: relative;
+}
+
+/* Tar bort cateogry thumbnail */
+.title_container .category_thumb {
+    display: none;
+}
+
+/* Visar antal sidor + Sorterings dropdown */
+.tool-bar {
+    display: inline;
+    background-color: #999;
+    padding: 15px 0;
+}
+
+/* Snabborderlänk header  */
+.snabborderlink {
+    font-size: 12px;
+    float: right;
+    height: 40px;
+    line-height: 41px;
+    position: relative;
+    z-index: 130;
+    padding: 0 10px;
+    display: inline;
+}
+
+.snabborderlink a {
+    text-decoration: none;
+}
+
+.widget_nav_menu .current-menu-item > a, .widget_nav_menu .current_page_item > a {
+    font-weight: normal;
+    background: #F0F0F0;
+}
+
+/**** 3. SIDEBAR ****/
+
+/* Meny vänsterkant */
+
+/* #top .widget ul li a {text-decoration: none;} */
+.widget_product_categories li {
+    padding: 1px;
+}
+
+.widget_product_categories li a {
+    font-size: 13px;
+    font-style: normal;
+}
+
+.widget_product_categories li a {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    padding: 2px 0 2px 4px;
+}
+
+.widget_product_categories li.cat-item {
+    border-top: 1px solid #e1e1e1;
+}
+
+.widget_product_categories li.current-cat {
+    background-color: #f0f0f0;
+}
+
+.widget ul li {
+    font: 13px/1.65em "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.widget ul li {
+    clear: both;
+    float: left;
+    margin: 0;
+    width: 100%;
+}
+
+#top .widget_nav_menu li:before {
+    content: "";
+}
+
+/*  Meny Information */
+.widget_nav_menu li a {
+    font: 13px/1.7em "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 2px 0 2px 4px;
+}
+
+.widget_nav_menu .current-menu-item > a, .widget_nav_menu .current_page_item > a {
+    font-weight: normal;
+    background: #F0F0F0;
+}
+
+/* Tar bort strecket mellan widgets */
+.widget_product_categories span.seperator {
+    display: none;
+}
+
+/* BWP Recent comments, moved css from plugin*/
+.recent-comment {
+    list-style-type: none;
+    margin-top: 10px;
+    /*ie fix*/
+    zoom: 1;
+}
+
+.recent-comment:after {
+    content: ".";
+    display: block;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.recent-comment .recent-comment-avatar {
+    display: none;
+}
+
+.recent-comment .avatar {
+    display: none;
+}
+
+.recent-comment .icon-comment {
+    vertical-align: text-top;
+}
+
+.recent-comment-single {
+    display: block;
+    margin-left: 0px;
+}
+
+.recent-comment-tb .recent-comment-single {
+    display: inline;
+    margin-left: 0px;
+}
+
+.recent-comment-credit {
+    font-size: 0.8em;
+    color: #aaaaaa;
+}
+
+.recent-comment-author {
+    font-weight: bold;
+    background: url("../images/icons/icon_comment.png") no-repeat right center;
+    padding-right: 20px;
+    overflow: hidden;
+}
+
+.recent-comment-text {
+    overflow: hidden;
+}
+
+/**** 4. STARTSIDAN ****/
+
+/* Katalog */
+.one_fourth.first.dynamic_template_columns.flex_column.flex_column_1 h2 {
+    color: #000080;
+}
+
+.one_fourth.first.dynamic_template_columns.flex_column.flex_column_1 a {
+    color: #000080;
+}
+
+/* Puff Utrustad delaktig */
+.one_fourth.dynamic_template_columns.flex_column.flex_column_2 h2 {
+    color: #000080;
+}
+
+.one_fourth.dynamic_template_columns.flex_column.flex_column_2 a {
+    color: #000080;
+}
+
+/*featured nyhet */
+.upw-posts .entry-title {
+    color: #000080;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+/* Höjd produktbilder startsidan */
+.dynamic_el_3 .template-shop .thumbnail_container_inner {
+    height: 200px;
+}
+
+.template-dynamic-frontpage .shop_columns_5 .template-shop {
+    border-top: 1px solid #e1e1e1;
+    padding-top: 10px;
+}
+
+.template-dynamic-frontpage .hr_flag {
+    height: 20px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* upw_theme_standard */
+.upw-posts article {
+    display: block;
+    margin-bottom: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #ddd
+}
+
+.upw-posts article:last-child {
+    border-bottom: 0;
+    padding-bottom: 0
+}
+
+.upw-posts .entry-title {
+    margin-bottom: .5em
+}
+
+.upw-posts .entry-title a {
+    text-decoration: none
+}
+
+.upw-posts .entry-title a:focus, .upw-posts .entry-title a:hover {
+    text-decoration: underline
+}
+
+.upw-posts .entry-image {
+    margin-bottom: 1em
+}
+
+.upw-posts .entry-image img {
+    max-width: 100%;
+    height: auto
+}
+
+.upw-posts .entry-meta {
+    color: #888;
+    font-size: .9em;
+    margin-bottom: 1em;
+    line-height: 1.4
+}
+
+.upw-posts .entry-meta .comments {
+    white-space: nowrap
+}
+
+.upw-posts .entry-content > :last-child, .upw-posts .entry-summary > :last-child {
+    margin-bottom: 1em
+}
+
+.upw-posts .more-link {
+    white-space: nowrap
+}
+
+.upw-posts footer {
+    display: block;
+    color: #888;
+    font-size: .9em;
+    line-height: 1.4
+}
+
+.upw-posts .custom-field, .upw-posts .entry-categories, .upw-posts .entry-custom-fields, .upw-posts .entry-tags {
+    margin-bottom: .5em
+}
+
+.upw-after, .upw-before {
+    margin-bottom: 1rem
+}
+
+.upw-after > :last-child, .upw-before > :last-child {
+    margin-bottom: 0
+}
+
+/*
+Advacned recent post widget orginal from plugin dir
+Default CSS Styles for the advanced recent post widget plug-in Version 3.0.0
+*/
+.advanced_recent_posts_widget * {
+    margin: 0;
+    padding: 0;
+}
+
+.advanced_recent_posts_widget {
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.advanced_recent_posts_widget .post-title {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.advanced_recent_posts_widget .post-date {
+    font-style: italic;
+}
+
+.advanced_recent_posts_widget img {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.advanced_recent_posts_widget ul li {
+    list-style: none;
+    list-style-type: none;
+    margin: 3px 0;
+    padding: 3px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.advanced_recent_posts_widget .more-link {
+    display: inline;
+}
+
+.advanced_recent_posts_widget .post-entry {
+    padding: 0 0 5px 0;
+    overflow: hidden;
+}
+
+/* Widget startsidan, advanced recent posts custom */
+.advanced_recent_posts_widget {
+    padding-bottom: 5px !important;
+}
+
+.advanced_recent_posts_widget ul li {
+    line-height: 18px !important;
+}
+
+.advanced_recent_posts_widget ul li:last-child {
+    border: 0 !important;
+}
+
+.advanced_recent_posts_widget h3.widgettitle {
+    font-size: 12px !important;
+    letter-spacing: 0.5px !important;
+    padding-bottom: 6px !important;
+    border-bottom: 1px solid #ccc !important;
+    color: #000080;
+}
+
+#top .widget .more-link {
+    color: #000080 !important;
+}
+
+/* widget fix */
+.upw-posts {
+    line-height: 18px;
+}
+
+.upw-posts .more-link {
+    color: #000080;
+}
+
+/* widget fix */
+.widget_ultimate_posts {
+    padding-bottom: 0;
+}
+
+/* ajax nav */
+.bwp-rc-ajax-nav {
+    list-style-type: none;
+    list-style-position: inside;
+    text-align: right;
+}
+
+#top .widget .bwp-rc-older-nav {
+    color: #000080 !important;
+}
+
+/* widget fix recensioner startsidan*/
+.bwp-rc-widget h3.widgettitle {
+    color: #000080;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.bwp-rc-widget {
+    padding: 0;
+}
+
+.bwp-rc-widget .bwp-rc-ajax-nav {
+    padding: 6px 0 20px 0;
+    border-top: solid 1px #E1E1E1;
+    text-decoration: underline;
+}
+
+li.recent-comment {
+    margin-bottom: 3px !important;
+    line-height: 17px !important;
+}
+
+span.recent-comment-single {
+    font-weight: bold;
+    padding: 3px 0;
+    /*    border-top-style: dotted; */
+    border-top-style: solid;
+    border-top-width: 1px;
+}
+
+span.recent-comment-author {
+    font-weight: normal;
+    font-style: italic;
+    line-height: 25px;
+    /*	background:none; */
+}
+
+/* 5. PRODUKLISTNING KATEGORIVY*/
+
+/* Justering av text under bild */
+.title_container_image {
+    padding-left: 0;
+}
+
+.product h3 {
+    color: #000080;
+}
+
+.products .product h3, .products .product h4, .products .product h5, .products .product h6 {
+    font: bold 13px/15px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 5px 0;
+}
+
+/* författarens namn */
+.forfattare {
+    color: #666;
+    line-height: normal;
+    font: 13px Arial, Geneva, sans-serif;
+    font-style: italic;
+}
+
+.content .undertitel {
+    color: #000;
+    font: 13px/1.3em arial, "Georgia", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-top: 3px;
+}
+
+/* priser svarta */
+#top .price, div .stock {
+    color: #000;
+}
+
+#top #wrap_all ins {
+    color: #cc0000;
+    font-weight: 500;
+}
+
+#top #wrap_all del {
+    color: #000;
+    font-weight: normal;
+    margin-top: 5px;
+}
+
+#top #wrap_all .template-shop ins::before {
+    content: "";
+    display: inline-block;
+    font-size: 20px;
+    line-height: 12px;
+    padding: 0;
+}
+
+/* minska avstånd relaterade produkter */
+.product_column_3 .hr_flag {
+    margin-top: 30px;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* Fixar höjderna på produktbilderna vid produktlistning på produktkategorierna */
+.template-shop .thumbnail_container_inner_ {
+    height: 240px;
+}
+
+.template-shop .thumbnail_container_inner_little {
+    height: 150px;
+}
+
+.template-shop .thumbnail_container_inner_medium {
+    height: 150px;
+}
+
+.template-shop .thumbnail_container_inner_big {
+    height: 200px;
+}
+
+.template-shop .thumbnail_container_inner_front-200 {
+    height: 200px;
+}
+
+.template-shop .thumbnail_container_inner_large {
+    height: 240px;
+}
+
+.template-shop .thumbnail_container_inner_large-215 {
+    height: 180px;
+}
+
+.single .template-shop .thumbnail_container_inner_ {
+    height: 160px;
+}
+
+/* Bilder i prod kat align bottom, jpg ger linje */
+/*
+#top .template-shop .nine .thumbnail_container img[src$=".jpg"], #top .template-shop .nine .thumbnail_container a:hover img[src$=".jpg"] {
+    border: 1px solid #ccc;
+    bottom: 0;
+    position: absolute; // ger mobil strul 
+}
+*/
+
+/* Bilder i prod kat align bottom */
+.template-shop ul.products img.wp-post-image {
+    bottom: 0;
+    position: absolute; /* ger mobil strul */
+}
+
+/* Align omslag i nederkant på slider startisdan*/
+.single_slide img.attachment-shop_catalog {
+    bottom: 0;
+    position: absolute;
+}
+
+/* rea-pris */
+#top .price-container ins {
+    color: #3F3;
+}
+
+#top .price, div .stock {
+    color: #000;
+}
+
+/* Ord. pris */
+
+.span_amount {
+    font-size: 18px;
+}
+
+.products .price { /* background-color:#AEC71E;padding:5px 10px; */
+}
+
+/* Ser till att splashen trillar utanför ramen */
+.thumbnail_container {
+    overflow: visible;
+}
+
+.feature-splash {
+    background-color: #F90;
+    padding: 2px 8px;
+    position: absolute;
+    bottom: 65px;
+    left: -5px;
+    color: #fff;
+    font-weight: bold;
+    /*background-image:url(../images/background-images/red-splash.png);*/
+    z-index: 10;
+}
+
+.feature-splash-single {
+    background-color: #F90;
+    padding: 2px 8px;
+    margin: 5px 10px 0 0;
+    width: 45px;
+    float: left;
+    color: #fff;
+    font-weight: bold;
+    vertical-align: middle;
+    /*	position: absolute;
+        top:80px;
+        left:-5px; */
+    /*background-image:url(../images/background-images/red-splash.png);
+    z-index:10; */
+}
+
+.feature-digital-splash {
+    background-color: #AEC71E;
+    padding: 2px 8px;
+    position: absolute;
+    bottom: 95px;
+    left: -5px;
+    color: #fff;
+    font-weight: bold;
+    /*background-image:url(../images/background-images/red-splash.png);*/
+    z-index: 10;
+}
+
+.feature-digital-splash-2 {
+    background-color: #AEC71E;
+    padding: 2px 8px;
+    position: absolute;
+    bottom: 65px;
+    left: -5px;
+    color: #fff;
+    font-weight: bold;
+    /*background-image:url(../images/background-images/red-splash.png);*/
+    z-index: 10;
+}
+
+.smakprov-splash {
+    background-color: #2c70b2;
+    padding: 2px 8px;
+    position: absolute;
+    bottom: 35px;
+    left: -5px;
+    color: #fff;
+    font-weight: bold;
+    /*background-image:url(../images/background-images/red-splash.png);*/
+    z-index: 10;
+}
+
+.sales-splash {
+    background-color: #F00;
+    padding: 2px 8px;
+    position: absolute;
+    top: 50px;
+    left: -5px;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* undertitel text */
+/*.upsells.products .undertitel{color:#000;color:#000;line-height:normal;margin-top:3px;font-size:12px;}*/
+
+/* Produkter kategorisidan */
+/*.products .product h3, .products .product h4, .products .product h5, .products .product h6 {
+    font: bold 13px/15px "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 0;
+    padding: 5px 0;*/
+
+/**** 6. PRODUKT SINGEL SIDA ****/
+
+.produkt-extra {
+    margin-bottom: 5px;
+}
+
+.obstext {
+    color: #F00;
+}
+
+/* lev datum */
+
+div.product p.available-on-backorder {
+    color: #F00;
+    font-size: 13px;
+}
+
+div.product p.out-of-stock {
+    color: #FF0000;
+    padding-bottom: 15px;
+    font-size: 13px;
+}
+
+p.backorder_notification {
+    color: #F00;
+}
+
+.template-shop .product_meta {
+    top: auto;
+}
+
+.undertitel {
+    color: #000;
+}
+
+h5.undertitel {
+    color: #666;
+    font-size: 19px;
+    margin-top: 5px;
+}
+
+/* I samma serie fix */
+div ul.product_list_widget li img {
+    float: left;
+    margin-right: 4px;
+}
+
+#top .price_container .price span.amount {
+    bottom: 8px;
+    /* position: absolute; */
+}
+
+#top .price_container .price span.amount {
+    font-size: 24px;
+    margin-left: 5px;
+}
+
+div form.cart div.quantity {
+    min-width: 50px;
+}
+
+div .quantity input.qty {
+    width: 20px;
+}
+
+/*div form.cart div.quantity {min-width: 70%;position:relative;top:5px;}*/
+
+/* Ta bort plus och minus vid inköpsknappen */
+/* div .quantity input.plus, div .quantity input.minus, div .widget_layered_nav ul li.chosen, div .widget_price_filter .price_slider_wrapper .ui-slider-handle {display:none;} */
+
+/*form.cart div.quantity {
+	float:right;}
+	
+div .quantity input.qty {
+    border: 1px solid #e1e1e1;
+    display: inline;
+    padding: 3px;
+    vertical-align: middle;
+}*/
+
+.prev_image_container h4 {
+    font: bold 10px/17px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #000080;
+}
+
+.template-shop .product_fakta {
+    font: 11.5px/17px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+h5.forfattare {
+    color: #666;
+    font: italic 16px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 5px 0 10px;
+}
+
+h6.smak {
+    display: inline;
+    font: 600 13px Arial, Geneva, sans-serif;
+    position: relative;
+    top: -8px;
+}
+
+h6.bladder {
+    display: inline;
+    font: 600 13px Arial, Geneva, sans-serif;
+    margin-right: 20px;
+    position: relative;
+    top: -8px;
+}
+
+.produktikon {
+    display: inline;
+    padding-right: 4px;
+}
+
+h6.ebok {
+    display: inline;
+    font: 600 13px Arial, Geneva, sans-serif;
+    margin-right: 20px;
+    position: relative;
+    top: -8px;
+}
+
+.download_text {
+    border-top: 1px solid #999 !important;
+    font-style: italic;
+    padding-top: 2px;
+}
+
+/* Recension */
+#reviews #comments ol.commentlist li .comment-text p {
+    line-height: 17px;
+}
+
+div #reviews #comments ol.commentlist li .comment-text p.meta {
+    background: url("../images/icons/icon_comment.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+    padding-left: 20px;
+}
+
+#reviews #comments ol.commentlist li .comment-text p {
+    line-height: 17px;
+}
+
+div #reviews #comments ol.commentlist li .comment-text {
+    border-radius: 0;
+    padding: 11px 11px 0;
+}
+
+#top .commentlist .comment {
+    min-height: 0;
+}
+
+#reply-title {
+    display: inherit;
+    padding: 15px 0 7px 0;
+}
+
+.comment-form-comment label {
+    display: none !important;
+}
+
+/* Varannan recension grå bakgrund */
+div #reviews #comments ol.commentlist li:nth-child(odd) {
+    background: #F3F3F3;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    /*	-webkit-transform:rotate(-0.6deg);
+        -moz-transform:rotate(-0.6deg);
+        transform:rotate(-0.6deg); */
+}
+
+/* Ta bort linjer runt recensioner */
+div #reviews #comments ol.commentlist li .comment-text {
+    border-width: 0;
+    /*	border-bottom:1px solid #e1e1e1; */
+}
+
+div #reviews #comments ol.commentlist li .comment-text {
+    margin: 0;
+}
+
+div #reviews #comment {
+    height: 75px;
+}
+
+div #reviews #comments ol.commentlist li .comment-text p.meta {
+    background: url("../images/icons/icon_comment.png") no-repeat left center;
+    padding-left: 20px;
+}
+
+div ul.product_list_widget li {
+    border-color: #ccc;
+    border-top-style: solid;
+}
+
+div ul.product_list_widget li a {
+    line-height: 14px;
+}
+
+div ul.product_list_widget li a {
+    color: #333333;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/**** Krokedil ****/
+
+#text-4 span.image_overlay_effect.external_image, #text-5 span.image_overlay_effect.external_image {
+    opacity: 0 !important;
+}
+
+#text-4 a, #text-4 h2, #text-5 a, #text-5 h2 {
+    color: #000080 !important;
+    text-decoration: none;
+}
+
+/* Removes the checkbox before shipping option */
+input#shipping_method_0_flat_rate5, input#shipping_method_0_oik_weight_zone_shipping_1 {
+    display: none !important
+}
+
+/*.admin-bar input#shipping_method_0_flat_rate5, .admin-bar input#shipping_method_0_oik_weight_zone_shipping_1 {
+    display: inline-block !important
+}*/
+/* Removes the padding on the checkbox before the shipping option */
+.shop_table ul#shipping_method li, .cart_totals ul#shipping_method li {
+    padding-left: 0px;
+}
+
+/* Rubriker Flaggor produktsidor */
+span.flag-text {
+    color: #000 !important;
+    letter-spacing: 1px;
+}
+
+.flag-text {
+    font-weight: bold;
+}
+
+#submit {
+    color: #000 !important;
+}
+
+button.button {
+    color: #000 !important;
+}
+
+.single-product .product_meta {
+    display: none;
+}
+
+div.bundled_product_summary,
+.woocommerce div.product.bundled_product_summary {
+    display: none;
+}
+
+/**** 7. KASSA- OCH KONTOSIDOR ****/
+
+.cart-collaterals .cart_totals h2 {
+    font-size: 20px;
+}
+
+.cart-collaterals .cart_totals a.button.alt {
+    float: right;
+    color: #000;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* knapp */
+#payment #place_order {
+    font-weight: bold;
+}
+
+/* knapptext */
+#top .shop_table td.product-name a {
+    color: #15c;
+}
+
+/* produktlänker kassasidan */
+
+#top p.order-again {
+    margin-bottom: 25px;
+}
+
+.logged-in.woocommerce-account h2 {
+    margin-top: 1.0em;
+}
+
+.logged-in.page-id-11814 h2 {
+    margin-top: 1.5em;
+}
+
+p.order-again {
+    display: block;
+    padding-bottom: 3.0em;
+}
+
+/* Rubriker tabeller */
+#top table.shop_table th.product-name {
+    color: #000;
+}
+
+#top table.shop_table th.product-price {
+    color: #000;
+}
+
+#top table.shop_table th.product-quantity {
+    color: #000;
+}
+
+#top table.shop_table th.product-subtotal {
+    color: #000;
+}
+
+#top table.shop_table th.product-total {
+    color: #000;
+}
+
+#top th {
+    color: #000 !important;
+}
+
+p#allw {
+    margin-top: 15px;
+}
+
+/**** 8. EGNA TEMPLATES SIDOR eller andra sidor ****/
+
+/* Blog tpl */
+.template-blog .content, .template-blog .sidebar {
+    margin-top: 0;
+}
+
+/* Login och register tpl */
+.col2-set .col-1 {
+    float: left;
+    width: 48%;
+}
+
+.col-1, .col-2 {
+    position: relative;
+}
+
+form.register, form.login {
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 20px 0;
+    padding: 20px;
+    text-align: left;
+}
+
+.col-1 label {
+    display: inline;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* press media produktlistning */
+.right {
+    float: right;
+    padding-bottom: 20px;
+}
+
+.left {
+    float: left;
+    padding-bottom: 20px;
+}
+
+/* ingen skugga på inloggninssidan */
+#login #nav, #login #backtoblog {
+    text-shadow: none;
+}
+
+/* göm epostadress på kontosida*/
+/* Skapar tyvärr problemet att epostadressfältet även göms på Skapa konto sidan
+p.form-row.form-row-wide label[for="account_email"] {display:none;}
+p.form-row.form-row-wide input[type=email]{display:none;}
+*/
+
+/*
+#main .woocommerce p.myaccount_user {padding-bottom:2.5em;}
+#main .woocommerce ul.digital-downloads {padding-bottom:2.5em;}
+table.shop_table {padding-bottom:2.5em!important;}
+*/
+
+/**** 8. Posts / Nyheter ****/
+
+/* Mer whitespace över datum på nyheter single */
+.blog .post-entry {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #aec71e;
+}
+
+.template-single-blog .post-entry {
+    padding-top: 20px;
+}
+
+.date-container.minor-meta.meta-color {
+    padding-top: 20px;
+}
+
+.post_nav {
+    border-top: 5px solid #aec71e !important;
+}
+
+.template-blog span.post-meta-infos {
+    display: none;
+}
+
+.template-single-blog span.blog-tags {
+    display: none;
+}
+
+.page-template-template-presentation-forfattare .template-blog span.post-meta-infos {
+    display: inline;
+}
+
+.flaggans-text {
+    font-weight: bold;
+    margin-left: 30px;
+    font-size: 12px;
+}
+
+.post_nav, .post_nav a {
+    color: #15c !important;
+}
+
+/**** 9. FOOTER ****/
+
+#footer {
+    font-size: 11px;
+    overflow: hidden;
+    padding: 10px 0 30px;
+}
+
+#text-3 .textwidget {
+    padding-top: 20px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+#footer .widget {
+    padding: 0;
+}
+
+#socket .copyright {
+    text-align: center;
+}
+
+#socket .sociala {
+    width: 100%;
+    text-align: center;
+}
+
+#top #socket .social_bookmarks {
+    height: auto;
+    position: relative;
+    right: auto;
+    top: auto;
+    text-align: center;
+    float: none;
+    display: inline-block;
+}
+
+/*  #Mobile (Portrait)
+================================================== */
+
+/* Note: Design for a width of 320px */
+/* CB mods only, default media queries in propulsion/css/layout.css */
+
+@media only screen and (min-width: 768px) {
+    .template-shop .product_meta {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+
+    /* CB MODS - HEADER */
+    .snabborderlink {
+        display: none;
+    }
+
+    /* ingen Snabborder på mobil i headern */
+    .menu-customer-navigation-container {
+        display: none;
+    }
+
+    /* ingen Mitt konto eller inloggning på mobil i headern */
+    /* CB MODS - FRONT PAGE */
+    #top .widget_ultimate_posts {
+        display: none;
+    }
+
+    /* Gömmer featured nyhet*/
+    /* #top .dynamic_el_5 {display:none;}*/
+    #top .dynamic_el_3 {
+        display: none;
+    }
+
+    /* Gömmer mobilmenyn från föräldratemat, pluginet ShiftNav sköter mobilmenyn*/
+    #top .mobileMenu {
+        display: none !important;
+    }
+
+    .register_popup {
+        height: 400px;
+    !important
+    }
+
+    .phoe_both_pop .row {
+        margin-right: 15px !important;
+    }
+
+    #top .dynamic_el_5 {
+        display: none;
+    }
+
+    /* göm produkt slider, katalog och bläddra på issue mobil 171030 */
+    .template-dynamic-frontpage .shop_columns_5 .template-shop {
+        display: none;
+    }
+
+    .one_fourth.first.dynamic_template_columns.flex_column.flex_column_1 {
+        display: none;
+    }
+
+    .one_fourth.dynamic_template_columns.flex_column.flex_column_2 {
+        display: none;
+    }
+
+    /* produkt slider */
+    #top .widget_sp_image {
+        display: none;
+    }
+
+    #top .frakt-datum-widget {
+        display: none;
+    }
+
+    /* tar bort bild med fraktdatum */
+    div#text-4, div#text-5, div#bwp_recent_comments-2 {
+        float: none;
+        clear: none;
+        width: auto;
+        padding-top: 0px;
+        margin-right: 0%;
+    }
+
+    /* CB MODS - GENERIC */
+    .tva_tredjedelar {
+        width: 100%
+    }
+
+    /* använd hela bredden för mobiler */
+    .inner_sidebar {
+        display: none;
+    }
+
+    /* tar bort sidomenyer för mobiler */
+    .main_menu {
+        display: none;
+    }
+
+    /* tar bort topmenyer för mobiler */
+    #review_form #respond {
+        display: none;
+    }
+
+    /* tar bort möjligheten att skriva recensioner fån mobil */
+    /* CB MODS - PRODUKTKATEGORI */
+    .nine.units .products .product h3 {
+        font-size: 1.6em;
+        line-height: 1.3em;
+    }
+
+    #top .nine.units .products .product .price,
+    #top .nine.units .products .product .price span,
+    #top .nine.units .products .product del,
+    #top .nine.units .products .product ins {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .template-shop .thumbnail_container_inner_large {
+        height: auto;
+    }
+
+    .nine.units.content .undertitel {
+        font-size: 1.4em;
+        margin-bottom: 10px;
+    }
+
+    /* Större text för mobil */
+    /*#top .nine.units .amount {font-size:1.6em;}  Större text för mobil */
+    .nine.units .forfattare {
+        font-size: 1.4em;
+    }
+
+    /* Större text för mobil */
+    .nine.units .products .product {
+        padding: 15px 0;
+        border-bottom: 1px solid;
+        border-color: #e1e1e1;
+    }
+
+    #top .thumbnail_container a:hover img[src$=".jpg"] {
+        position: relative !important; /* återanpassar prodkatvy för mobil */
+    }
+
+    .template-shop ul.products img.wp-post-image {
+        position: relative !important; /* återanpassar prodkatvy för mobil */
+    }
+
+    .single .template-shop .thumbnail_container_inner_ {
+        height: auto; /* återanpassar omslagshöjd för mobil */
+    }
+
+    #top .thumbnail_container img {
+        width: 90% !important;
+    }
+
+    /* CB MODS - PRODUKTER */
+    .product_fakta {
+        display: none;
+    }
+
+    /* Produktfakta behöver inte visas på mobil */
+    .prev_image_container h4 {
+        display: none;
+    }
+
+    .product_column_3 .hr_flag {
+        padding: 30px 0;
+    }
+
+    /* öka avståndet relaterade produkter */
+    .woocommerce-noreviews {
+        display: none;
+    }
+
+    .thumbnail_container {
+        overflow: hidden;
+    }
+}
+
+/* Privatperson i kassan*/
+.show-company #shipping_method li:first-of-type,
+#shipping_method li:last-of-type,
+.payment_method_cod {
+    display: none;
+}
+
+/* Företag i kassan  */
+#shipping_method li:first-of-type,
+.show-company #shipping_method li:last-of-type,
+.show-company .payment_method_cod,
+.international .payment_method_cod {
+    display: block;
+}
+
+/*.admin-bar .show-company #shipping_method li:first-of-type,
+.admin-bar #shipping_method li:last-of-type,
+.admin-bar #shipping_method li:first-of-type,
+.admin-bar .show-company #shipping_method li:last-of-type{
+    display: block;
+}*/
+#checkout-info-box h3 {
+    display: block;
+    float: none;
+}
+
+#checkout-info-box {
+    border: 1px solid #e1e1e1;
+    background: #f8f8f8;
+    padding: 10px;
+}
+
+/*
+WooCoomerce Changes 19/5 2017
+*/
+#top .price_container .price span {
+    font-size: 24px;
+}
+
+#meta-boxes a {
+    color: #15c !important;
+    text-decoration: underline;
+}
+
+.call-customer-service-cart {
+    clear: both;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.product-categories .cat-item-1217 {
+    display: none;
+}
+.product-categories .cat-item-1473 {
+    display: none;
+}
+
+.slideshow_container {
+    margin-top: 10px;
+}
+
+/*
+WooCoomerce Changes 22/11 2017 for 3.2.2
+*/
+
+.products .product h2 {
+    font: bold 13px/15px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 5px 0;
+    color: #000080;
+}
+
+.woocommerce-account #shipping_company_field,
+.woocommerce-account #billing_company_field {
+    width: calc(100% - 6px);
+}
+
+.widget_decent_comments_widget .widgettitle {
+    color: #000080;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.decent-comments .comment-author {
+    font-weight: normal;
+    font-style: italic;
+    line-height: 25px;
+}
+
+.decent-comments .comment-link {
+    font-weight: bold;
+}
+
+.decent-comments ul {
+    display: inline-block;
+}
+
+.decent-comments li {
+    border-bottom: 1px solid #e1e1e1;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.decent-comments li:first-of-type {
+    border-top: 1px solid #e1e1e1;
+}
+
+div .quantity input.plus, div .quantity input.minus {
+    border-radius: 0;
+}
+
+@media screen and ( max-width: 759px ) {
+    .template-shop .thumbnail_container_inner_large-215,
+    .template-shop .thumbnail_container_inner_ {
+        height: auto;
+    }
+
+    .thumbnail_container {
+        overflow: visible;
+    }
+}
+
+/* Författarsida */
+
+.f-forrubrik {
+    margin-bottom: 1rem;
+}
+
+.f-ingress {
+    font-size: 1.1rem;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.f-meta {
+    margin-bottom: 0;
+}
+
+.f-meta:first-of-type {
+    margin-top: 2rem;
+}
