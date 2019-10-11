@@ -3347,11 +3347,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // initate variables
 var responseData = [];
 var colors = [],
-    columns = document.querySelectorAll('section'),
-    containers = document.querySelectorAll('.container'),
-    colorContainers = document.querySelectorAll('.color'),
-    nameContainers = document.querySelectorAll('.name'),
-    hexContainers = document.querySelectorAll('.hex'),
+    columns = document.querySelectorAll("section"),
+    containers = document.querySelectorAll(".container"),
+    colorContainers = document.querySelectorAll(".color"),
+    nameContainers = document.querySelectorAll(".name"),
+    hexContainers = document.querySelectorAll(".hex"),
     noOfColumns = columns.length,
     noOfRows = containers.length / noOfColumns,
     reloadBtn = document.querySelector("#reload"),
@@ -3359,7 +3359,7 @@ var colors = [],
     copyBtn = document.querySelector("#copy"); // initiate colors to work with
 
 var colorInit = function colorInit() {
-  var colorFunc = _chromaJs.default.scale([_chromaJs.default.random(), _chromaJs.default.random()]).mode('lch'); // The function to generate the random color scale
+  var colorFunc = _chromaJs.default.scale([_chromaJs.default.random(), _chromaJs.default.random()]).mode("lch"); // The function to generate the random color scale
 
 
   var startingColor = colorFunc(0);
@@ -3370,7 +3370,7 @@ var colorInit = function colorInit() {
     for (var i = 0; i < noOfColumns; i++) {
       var columnBaseColor = colorFunc(i / noOfColumns);
 
-      var columnLightnessScale = _chromaJs.default.scale(['white', columnBaseColor, 'black']).mode('lch');
+      var columnLightnessScale = _chromaJs.default.scale(["white", columnBaseColor, "black"]).mode("lch");
 
       var columnColors = [];
 
@@ -3388,9 +3388,9 @@ var colorInit = function colorInit() {
 var getColorNames = function getColorNames() {
   // Get color names from API
   var flatColors = colors.join(",");
-  var reqCol = flatColors.replace(/#/g, '');
+  var reqCol = flatColors.replace(/#/g, "");
   var request = new XMLHttpRequest();
-  request.open('GET', 'https://api.color.pizza/v1/' + reqCol, true);
+  request.open("GET", "https://api.color.pizza/v1/" + reqCol, true);
 
   request.onload = function () {
     responseData = JSON.parse(this.response).colors;
@@ -3426,26 +3426,27 @@ var init = function init() {
     colorInit();
     getColorNames();
     colorDOM();
+    toggleDarkMode();
+  });
+};
+
+var toggleDarkMode = function toggleDarkMode() {
+  darkModeToggle.addEventListener("click", function (e) {
+    if (darkModeToggle.checked == true) {
+      document.querySelector("html").classList.toggle("dark");
+    } else {
+      document.querySelector("html").classList.toggle("dark");
+    }
   });
 }; // make stuff interactive
 
 
-reloadBtn.addEventListener('click', function (e) {
+reloadBtn.addEventListener("click", function (e) {
   // init();
   colorInit();
   getColorNames();
   colorDOM();
-}); // const toggleDarkMode = function() {
-//     darkModeToggle.addEventListener('click', function (e) {
-//         if (darkModeToggle.checked == true) {
-//             document.querySelector("html").classList.toggle("dark");
-//             console.log("asdaf");
-//         } else {
-//             console.log("ajsdajksdnasd");
-//         }
-//     });
-// };
-
+});
 init();
 },{"chroma-js":"node_modules/chroma-js/chroma.js"}],"../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -3475,7 +3476,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61540" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64428" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

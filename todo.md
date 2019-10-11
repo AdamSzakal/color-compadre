@@ -1,3 +1,6 @@
 # Todo
-
-- Final appearance: https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pantone.com%2Fimages%2Fpages%2F21308%2Fpantone-color-swatches-palette-fashion-color-report-fall-2017-new-york.jpg&f=1
+- add click-event listener to cards
+- on click, add color code to selectedColors[] and highlight selected card
+- print selectedColors[] somewhere
+- on click to "copy selected colors to clipboard", do that
+- on click on "copy svg to figma", do that
