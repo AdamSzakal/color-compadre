@@ -49,7 +49,6 @@ html.dark .color {
   background: rgb(72, 72, 72);
   color: #fafafa;
   text-decoration: none;
-  border: 1px solid hsla(255, 0%, 0%, 0.1);
   border-radius: 4px;
   text-align: center;
 }
@@ -61,7 +60,6 @@ html.dark .color {
   min-width: 7vw;
   display: flex;
   justify-content: flex-start;
-  border-radius: 2px;
   margin: 0.5rem;
   background-color: hsla(255, 0%, 100%, 1);
   border: 1px solid rgba(0, 0, 0, 0);
@@ -84,7 +82,7 @@ html.dark .color {
   width: 100%;
   height: 4rem;
   border: 1px solid hsla(255, 0%, 0%, 0.1);
-  border-radius: 2px 2px 0 0;
+  border-radius: 4px;
   transition: background-color 0.5s ease-out;
 }
 
@@ -176,6 +174,15 @@ code {
 
   .container {
     padding: 0;
+    margin: 0.25rem;
+  }
+
+  .controls {
+    display: flex;
+  }
+
+  .button {
+    width: 100%;
   }
 
   .color {
