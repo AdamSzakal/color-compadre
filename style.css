@@ -1,4 +1,5 @@
 @import url('https://rsms.me/inter/inter.css');
+<<<<<<< HEAD
 html {
   font-family: 'Inter', sans-serif;
 }
@@ -30,6 +31,29 @@ html.dark {
   background-color: hsla(255, 10%, 10%, 1);
   color: hsl(255, 0%, 100%);
   transition: background-color 0.3s ease-out, color 0.3s ease-out;
+=======
+html {
+    font-family: 'Inter', sans-serif;
+}
+
+@supports (font-variation-settings: normal) {
+    html {
+        font-family: 'Inter var', sans-serif;
+    }
+}
+
+html {
+    font-size: 11px;
+    background-color: hsl(255, 15%, 95%);
+    color: hsla(255, 10%, 20%, 1);
+    /* transition: background-color .1s ease-out, color .1s ease-out; */
+}
+
+html.dark {
+    font-size: 11px;
+    background-color: hsla(255, 10%, 20%, 1);
+    color: hsl(255, 0%, 100%);
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
 }
 
 html.dark .container,
@@ -39,6 +63,7 @@ html.dark .button {
 }
 
 html.dark .color {
+<<<<<<< HEAD
   border: 1px solid hsla(255, 0%, 100%, 0.1);
 }
 
@@ -90,6 +115,17 @@ html.dark .color {
 
 .selected {
   border: 2px dashed black;
+=======
+    /* border: 1px solid hsla(255, 0%, 100%, .1); */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: 'Inter', sans-serif;
+    margin: 1em;
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
 }
 
 main {
@@ -108,12 +144,23 @@ section {
 }
 
 aside {
+<<<<<<< HEAD
   font-size: 1.2rem;
   width: 100%;
   margin: 0 0.25em;
   display: flex;
   align-items: center;
   justify-content: center;
+=======
+    margin: 0 .25em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    margin: 2em .5em;
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
 }
 
 footer {
@@ -122,10 +169,21 @@ footer {
   padding-bottom: 0.25rem;
 }
 
+header {
+    display: flex;
+    width: 100%;
+}
+
 h1 {
+<<<<<<< HEAD
   font-size: 1.4rem;
   font-weight: 400;
   font-family: 'Inter', sans-serif;
+=======
+    margin-top: 1em;
+    margin-left: .5em;
+    margin-right: auto;
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
 }
 
 h2 {
@@ -141,6 +199,7 @@ code {
   margin: 0;
 }
 
+<<<<<<< HEAD
 @keyframes appear {
   0% {
     opacity: 0;
@@ -177,3 +236,63 @@ code {
     min-height: 100%;
   }
 }
+=======
+.container {
+    animation: appear .5s forwards;
+    display: flex;
+    flex-direction: column;
+    cursor: crosshair;
+    min-width: 7vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    border-radius: 2px;
+    /* padding: .25rem; */
+    margin: .5rem;
+    background-color: hsla(255, 0%, 100%, 1);
+}
+
+.color {
+    width: 100%;
+    height: 6rem;
+    border: 1px solid hsla(255, 0%, 0%, .1);
+    border-radius: 2px 2px 0 0;
+    transition: background-color .5s ease-out;
+}
+
+.selected {
+    border: 2px dashed black;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        height: 100vh;
+        margin: 0;
+    }
+    main {
+        height: 100%;
+    }
+    footer {
+        display: none;
+    }
+    .container {
+        padding: 0;
+    }
+    .color {
+        min-height: 100%;
+    }
+}
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411

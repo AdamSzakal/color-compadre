@@ -3347,6 +3347,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // initate variables
 var responseData = [];
 var colors = [],
+<<<<<<< HEAD
     columns = document.querySelectorAll('section'),
     containers = document.querySelectorAll('.container'),
     colorContainers = document.querySelectorAll('.color'),
@@ -3360,8 +3361,36 @@ var colors = [],
 
 var colorInit = function colorInit() {
   var colorFunc = _chromaJs.default.scale([_chromaJs.default.random(), _chromaJs.default.random()]).mode('lch'); // The function to generate the random color scale
+=======
+    columns = document.querySelectorAll("section"),
+    containers = document.querySelectorAll(".container"),
+    colorContainers = document.querySelectorAll(".color"),
+    nameContainers = document.querySelectorAll(".name"),
+    hexContainers = document.querySelectorAll(".hex"),
+    noOfColumns = columns.length,
+    noOfRows = containers.length / noOfColumns,
+    reloadBtn = document.querySelector("#reload"),
+    darkModeToggle = document.querySelector("#darkmodetoggle"),
+    copyBtn = document.querySelector("#copy"); // initiate colors to work with
+
+var colorInit = function colorInit() {
+  var colorFunc = _chromaJs.default.scale([_chromaJs.default.random(), _chromaJs.default.random()]).mode("lch"); // The function to generate the random color scale
 
 
+  var startingColor = colorFunc(0);
+  var endingColor = colorFunc(1);
+
+  var getColors = function getColors() {
+    //get base hue for each column, then generate the color scale to black/white for each
+    for (var i = 0; i < noOfColumns; i++) {
+      var columnBaseColor = colorFunc(i / noOfColumns);
+
+      var columnLightnessScale = _chromaJs.default.scale(["white", columnBaseColor, "black"]).mode("lch");
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
+
+      var columnColors = [];
+
+<<<<<<< HEAD
   var startingColor = colorFunc(0);
   var endingColor = colorFunc(1);
 
@@ -3374,6 +3403,8 @@ var colorInit = function colorInit() {
 
       var columnColors = [];
 
+=======
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
       for (var j = 0; j < noOfRows; j++) {
         columnColors.push(columnLightnessScale(j / noOfRows + 0.05).hex());
       }
@@ -3387,10 +3418,17 @@ var colorInit = function colorInit() {
 
 var getColorNames = function getColorNames() {
   // Get color names from API
+<<<<<<< HEAD
   var flatColors = colors.join(',');
   var reqCol = flatColors.replace(/#/g, '');
   var request = new XMLHttpRequest();
   request.open('GET', 'https://api.color.pizza/v1/' + reqCol, true);
+=======
+  var flatColors = colors.join(",");
+  var reqCol = flatColors.replace(/#/g, "");
+  var request = new XMLHttpRequest();
+  request.open("GET", "https://api.color.pizza/v1/" + reqCol, true);
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
 
   request.onload = function () {
     responseData = JSON.parse(this.response).colors;
@@ -3422,14 +3460,34 @@ var colorDOM = function colorDOM() {
 
 
 var init = function init() {
+<<<<<<< HEAD
   document.addEventListener('DOMContentLoaded', function () {
     colorInit();
     getColorNames();
     colorDOM();
   });
 }; // make button behaviour and stuff
+=======
+  document.addEventListener("DOMContentLoaded", function () {
+    colorInit();
+    getColorNames();
+    colorDOM();
+    toggleDarkMode();
+  });
+};
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
 
+var toggleDarkMode = function toggleDarkMode() {
+  darkModeToggle.addEventListener("click", function (e) {
+    if (darkModeToggle.checked == true) {
+      document.querySelector("html").classList.toggle("dark");
+    } else {
+      document.querySelector("html").classList.toggle("dark");
+    }
+  });
+}; // make stuff interactive
 
+<<<<<<< HEAD
 var toggleDarkMode = function () {
   darkModeToggle.addEventListener('click', function (e) {
     if (darkModeToggle.checked == true) {
@@ -3441,11 +3499,16 @@ var toggleDarkMode = function () {
 }();
 
 reloadBtn.addEventListener('click', function (e) {
+=======
+
+reloadBtn.addEventListener("click", function (e) {
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
   // init();
   colorInit();
   getColorNames();
   colorDOM();
 });
+<<<<<<< HEAD
 
 var copyColor = function copyColor() {
   for (var i = 0; i < hexContainers.length; i++) {
@@ -3467,6 +3530,10 @@ var copyColor = function copyColor() {
 copyColor();
 init();
 },{"chroma-js":"node_modules/chroma-js/chroma.js"}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+=======
+init();
+},{"chroma-js":"node_modules/chroma-js/chroma.js"}],"../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -3494,7 +3561,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "50351" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64428" + '/');
+>>>>>>> e95947caa2ec3fc88b5aa7e0c59fb789cff74411
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -3669,5 +3740,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","script.js"], null)
+},{}]},{},["../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js","script.js"], null)
 //# sourceMappingURL=/script.75da7f30.js.map
