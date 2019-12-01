@@ -15,7 +15,7 @@ const colors = [],
   copyBtn = document.querySelector('#copy');
 
 // initiate colors to work with
-const colorInit = function() {
+const colorInit = function () {
   const colorFunc = Chroma.scale([Chroma.random(), Chroma.random()]).mode(
     'lch',
   );
@@ -24,7 +24,7 @@ const colorInit = function() {
   let startingColor = colorFunc(0);
   let endingColor = colorFunc(1);
 
-  const getColors = function() {
+  const getColors = function () {
     //get base hue for each column, then generate the color scale to black/white for each
     for (let i = 0; i < noOfColumns; i++) {
       let columnBaseColor = colorFunc(i / noOfColumns);
@@ -44,7 +44,7 @@ const colorInit = function() {
   getColors();
 };
 
-const getColorNames = function() {
+const getColorNames = function () {
   // Get color names from API
 
   let flatColors = colors.join(',');
@@ -52,12 +52,12 @@ const getColorNames = function() {
 
   let request = new XMLHttpRequest();
   request.open('GET', 'https://api.color.pizza/v1/' + reqCol, true);
-  request.onload = function() {
+  request.onload = function () {
     responseData = JSON.parse(this.response).colors;
     if (request.status >= 200 && request.status < 400) {
-      responseData.forEach(function(currentValue, index) {
+      responseData.forEach(function (currentValue, index) {
         nameContainers[index].innerHTML = currentValue.name;
-        hexContainers[index].innerHTML = currentValue.hex;
+        hexContainers[index].innerHTML = currentValue.requestedHex;
       });
     } else {
       console.log(error);
@@ -67,7 +67,7 @@ const getColorNames = function() {
 };
 
 // use colors on DOM
-const colorDOM = function() {
+const colorDOM = function () {
   let counter = 0;
   for (let i = 0; i < colors.length; i++) {
     for (let j = 0; j < colors[i].length; j++) {
@@ -78,8 +78,8 @@ const colorDOM = function() {
 };
 
 // initate app
-const init = function() {
-  document.addEventListener('DOMContentLoaded', function() {
+const init = function () {
+  document.addEventListener('DOMContentLoaded', function () {
     colorInit();
     getColorNames();
     colorDOM();
@@ -87,8 +87,8 @@ const init = function() {
 };
 
 // make button behaviour and stuff
-const toggleDarkMode = (function() {
-  darkModeToggle.addEventListener('click', function(e) {
+const toggleDarkMode = (function () {
+  darkModeToggle.addEventListener('click', function (e) {
     if (darkModeToggle.checked == true) {
       document.querySelector('html').classList.toggle('dark');
     } else {
@@ -97,26 +97,26 @@ const toggleDarkMode = (function() {
   });
 })();
 
-reloadBtn.addEventListener('click', function(e) {
+reloadBtn.addEventListener('click', function (e) {
   // init();
   colorInit();
   getColorNames();
   colorDOM();
 });
 
-const copyColor = function() {
+const copyColor = function () {
   for (let i = 0; i < hexContainers.length; i++) {
     let hexContainer = hexContainers[i];
-    hexContainer.addEventListener('click', function(e) {
+    hexContainer.addEventListener('click', function (e) {
       let hexCode = e.target.innerHTML;
       navigator.clipboard.writeText(hexCode).then(
-        function() {
+        function () {
           e.target.innerHTML = 'Copied!';
-          setTimeout(function() {
+          setTimeout(function () {
             e.target.innerHTML = hexCode;
           }, 1000);
         },
-        function() {
+        function () {
           console.log('sry bro');
         },
       );

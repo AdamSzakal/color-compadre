@@ -51,6 +51,11 @@ html.dark .color {
   text-decoration: none;
   border-radius: 4px;
   text-align: center;
+  transition: opacity .1s ease-out;
+}
+
+.button:hover {
+  opacity: .8;
 }
 
 .container {
