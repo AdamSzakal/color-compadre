@@ -3345,32 +3345,54 @@ var _chromaJs = _interopRequireDefault(require("chroma-js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // initate variables
-var responseData = [];
+var responseData = [],
+    hash = window.location.hash,
+    startingColor = "",
+    endingColor = "";
 var colors = [],
-    columns = document.querySelectorAll('section'),
-    containers = document.querySelectorAll('.container'),
-    colorContainers = document.querySelectorAll('.color'),
-    nameContainers = document.querySelectorAll('.name'),
-    hexContainers = document.querySelectorAll('.hex'),
+    columns = document.querySelectorAll("section"),
+    containers = document.querySelectorAll(".container"),
+    colorContainers = document.querySelectorAll(".color"),
+    nameContainers = document.querySelectorAll(".name"),
+    hexContainers = document.querySelectorAll(".hex"),
     noOfColumns = columns.length,
     noOfRows = containers.length / noOfColumns,
-    reloadBtn = document.querySelector('#reload'),
-    darkModeToggle = document.querySelector('#darkmodetoggle'),
-    copyBtn = document.querySelector('#copy'); // initiate colors to work with
+    reloadBtn = document.querySelector("#reload"),
+    darkModeToggle = document.querySelector("#darkmodetoggle"),
+    copyBtn = document.querySelector("#copy");
+
+var updateURL = function updateURL(startingColor, endingColor) {
+  // Update URL with base colors
+  // Update history with base colors
+  window.history.pushState("Color Compadre", "/" + startingColor + "/" + endingColor); //Update title
+
+  document.title = "Color Compadre: " + startingColor + "/" + endingColor;
+}; // initiate colors to work with
+
 
 var colorInit = function colorInit() {
-  var colorFunc = _chromaJs.default.scale([_chromaJs.default.random(), _chromaJs.default.random()]).mode('lch'); // The function to generate the random color scale
+  var colorFunc = _chromaJs.default.scale([_chromaJs.default.random(), _chromaJs.default.random()]).mode("lch"); // check if URL contains color values already
 
 
-  var startingColor = colorFunc(0);
-  var endingColor = colorFunc(1);
+  if (hash == "") {
+    startingColor = colorFunc(0);
+    endingColor = colorFunc(1);
+    updateURL(startingColor, endingColor);
+    console.log("no URL flags");
+  } else {
+    var baseColors = hash.split("/");
+    startingColor = baseColors[1];
+    endingColor = baseColors[0];
+    updateURL(startingColor, endingColor);
+    console.log("has URL flags");
+  }
 
   var getColors = function getColors() {
     //get base hue for each column, then generate the color scale to black/white for each
     for (var i = 0; i < noOfColumns; i++) {
       var columnBaseColor = colorFunc(i / noOfColumns);
 
-      var columnLightnessScale = _chromaJs.default.scale(['white', columnBaseColor, 'black']).mode('lch');
+      var columnLightnessScale = _chromaJs.default.scale(["white", columnBaseColor, "black"]).mode("lch");
 
       var columnColors = [];
 
@@ -3387,10 +3409,10 @@ var colorInit = function colorInit() {
 
 var getColorNames = function getColorNames() {
   // Get color names from API
-  var flatColors = colors.join(',');
-  var reqCol = flatColors.replace(/#/g, '');
+  var flatColors = colors.join(",");
+  var reqCol = flatColors.replace(/#/g, "");
   var request = new XMLHttpRequest();
-  request.open('GET', 'https://api.color.pizza/v1/' + reqCol, true);
+  request.open("GET", "https://api.color.pizza/v1/" + reqCol, true);
 
   request.onload = function () {
     responseData = JSON.parse(this.response).colors;
@@ -3398,7 +3420,6 @@ var getColorNames = function getColorNames() {
     if (request.status >= 200 && request.status < 400) {
       responseData.forEach(function (currentValue, index) {
         nameContainers[index].innerHTML = currentValue.name;
-        hexContainers[index].innerHTML = currentValue.requestedHex;
       });
     } else {
       console.log(error);
@@ -3415,6 +3436,7 @@ var colorDOM = function colorDOM() {
   for (var i = 0; i < colors.length; i++) {
     for (var j = 0; j < colors[i].length; j++) {
       colorContainers[counter].style.backgroundColor = colors[j][i];
+      hexContainers[counter].innerHTML = colors[j][i];
       counter++;
     }
   }
@@ -3422,7 +3444,7 @@ var colorDOM = function colorDOM() {
 
 
 var init = function init() {
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener("DOMContentLoaded", function () {
     colorInit();
     getColorNames();
     colorDOM();
@@ -3431,16 +3453,16 @@ var init = function init() {
 
 
 var toggleDarkMode = function () {
-  darkModeToggle.addEventListener('click', function (e) {
+  darkModeToggle.addEventListener("click", function (e) {
     if (darkModeToggle.checked == true) {
-      document.querySelector('html').classList.toggle('dark');
+      document.querySelector("html").classList.toggle("dark");
     } else {
-      document.querySelector('html').classList.toggle('dark');
+      document.querySelector("html").classList.toggle("dark");
     }
   });
 }();
 
-reloadBtn.addEventListener('click', function (e) {
+reloadBtn.addEventListener("click", function (e) {
   // init();
   colorInit();
   getColorNames();
@@ -3450,15 +3472,15 @@ reloadBtn.addEventListener('click', function (e) {
 var copyColor = function copyColor() {
   for (var i = 0; i < hexContainers.length; i++) {
     var hexContainer = hexContainers[i];
-    hexContainer.addEventListener('click', function (e) {
+    hexContainer.addEventListener("click", function (e) {
       var hexCode = e.target.innerHTML;
       navigator.clipboard.writeText(hexCode).then(function () {
-        e.target.innerHTML = 'Copied!';
+        e.target.innerHTML = "Copied!";
         setTimeout(function () {
           e.target.innerHTML = hexCode;
         }, 1000);
       }, function () {
-        console.log('sry bro');
+        console.log("sry bro");
       });
     });
   }
@@ -3494,7 +3516,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49530" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63159" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -3525,8 +3547,9 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
         assetsToAccept.forEach(function (v) {
           hmrAcceptRun(v[0], v[1]);
         });
-      } else {
-        window.location.reload();
+      } else if (location.reload) {
+        // `location` global exists in a web worker context but lacks `.reload()` function.
+        location.reload();
       }
     }
 
