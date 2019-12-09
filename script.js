@@ -52,8 +52,8 @@ const colorInit = function () {
   if (window.location.pathname == "/") {
     let urlSafeColor1 = color1.toString().substr(1);
     let urlSafeColor2 = color2.toString().substr(1);
-    // window.history.replaceState("", "", urlSafeColor1 + "/" + urlSafeColor2);
-    window.location.pathname = urlSafeColor1 + "/" + urlSafeColor2
+    window.history.replaceState("", "", "https://color-compadre.netlify.com/" + urlSafeColor1 + "/" + urlSafeColor2);
+    // window.location.pathname = urlSafeColor1 + "/" + urlSafeColor2
   }
 }
 
