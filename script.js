@@ -1,10 +1,7 @@
 import Chroma from "chroma-js";
 
 // initate variables
-let responseData = [],
-  hash = window.location.hash,
-  startingColor = "",
-  endingColor = "";
+let responseData = [];
 const colors = [],
   columns = document.querySelectorAll("section"),
   containers = document.querySelectorAll(".container"),
@@ -14,74 +11,63 @@ const colors = [],
   noOfColumns = columns.length,
   noOfRows = containers.length / noOfColumns,
   reloadBtn = document.querySelector("#reload"),
-  darkModeToggle = document.querySelector("#darkmodetoggle"),
-  copyBtn = document.querySelector("#copy");
+  darkModeToggle = document.querySelector("#darkmodetoggle");
 
-const updateURL = function(startingColor, endingColor) {
-  // Update URL with base colors
 
-  // Update history with base colors
-  window.history.pushState(
-    "Color Compadre",
-    "/" + startingColor + "/" + endingColor
-  );
 
-  //Update title
-  document.title = "Color Compadre: " + startingColor + "/" + endingColor;
-};
+const colorInit = function () {
+  let color1 = "";
+  let color2 = "";
+  let colorFunc = "";
 
-// initiate colors to work with
-const colorInit = function() {
-  const colorFunc = Chroma.scale([Chroma.random(), Chroma.random()]).mode(
-    "lch"
-  );
-
-  // check if URL contains color values already
-  if (hash == "") {
-    startingColor = colorFunc(0);
-    endingColor = colorFunc(1);
-    updateURL(startingColor, endingColor);
-    console.log("no URL flags");
-  } else {
-    let baseColors = hash.split("/");
-    startingColor = baseColors[1];
-    endingColor = baseColors[0];
-    updateURL(startingColor, endingColor);
-    console.log("has URL flags");
+  //check if url contains color params
+  if (window.location.pathname == "/") {
+    color1 = Chroma.random();
+    color2 = Chroma.random();
+    colorFunc = Chroma.scale([color1, color2]);
   }
-
-  const getColors = function() {
-    //get base hue for each column, then generate the color scale to black/white for each
-    for (let i = 0; i < noOfColumns; i++) {
-      let columnBaseColor = colorFunc(i / noOfColumns);
-      let columnLightnessScale = Chroma.scale([
-        "white",
-        columnBaseColor,
-        "black"
-      ]).mode("lch");
-      let columnColors = [];
-      for (let j = 0; j < noOfRows; j++) {
-        columnColors.push(columnLightnessScale(j / noOfRows + 0.05).hex());
-      }
-      colors[i] = columnColors;
-    }
+  else {
+    let urlColorVariables = window.location.pathname.substr(1).split("/");
+    color1 = urlColorVariables[0];
+    color2 = urlColorVariables[1];
+    colorFunc = Chroma.scale([color1, color2]);
   };
 
-  getColors();
-};
+  // after getting base colors and a scale between them, generate lightness scales for each
+  for (let i = 0; i < noOfColumns; i++) {
+    let columnBaseColor = colorFunc(i / noOfColumns);
+    let columnLightnessScale = Chroma.scale([
+      "white",
+      columnBaseColor,
+      "black"
+    ]).mode("lch");
+    let columnColors = [];
+    for (let j = 0; j < noOfRows; j++) {
+      columnColors.push(columnLightnessScale(j / noOfRows + 0.05).hex());
+    }
+    colors[i] = columnColors;
+  }
 
-const getColorNames = function() {
-  // Get color names from API
+  // if pathname is empty, update url with it
+  if (window.location.pathname == "/") {
+    let urlSafeColor1 = color1.toString().substr(1);
+    let urlSafeColor2 = color2.toString().substr(1);
+    // window.history.replaceState("", "", urlSafeColor1 + "/" + urlSafeColor2);
+    window.location.pathname = urlSafeColor1 + "/" + urlSafeColor2
+  }
+}
 
+
+const getColorNames = function () {
   let flatColors = colors.join(",");
   let reqCol = flatColors.replace(/#/g, "");
 
   let request = new XMLHttpRequest();
   request.open("GET", "https://api.color.pizza/v1/" + reqCol, true);
-  request.onload = function() {
+  request.onload = function () {
     responseData = JSON.parse(this.response).colors;
     if (request.status >= 200 && request.status < 400) {
-      responseData.forEach(function(currentValue, index) {
+      responseData.forEach(function (currentValue, index) {
         nameContainers[index].innerHTML = currentValue.name;
       });
     } else {
@@ -91,8 +77,7 @@ const getColorNames = function() {
   request.send();
 };
 
-// use colors on DOM
-const colorDOM = function() {
+const colorDOM = function () {
   let counter = 0;
   for (let i = 0; i < colors.length; i++) {
     for (let j = 0; j < colors[i].length; j++) {
@@ -103,46 +88,42 @@ const colorDOM = function() {
   }
 };
 
-// initate app
-const init = function() {
-  document.addEventListener("DOMContentLoaded", function() {
+const init = function () {
+  document.addEventListener("DOMContentLoaded", function () {
     colorInit();
     getColorNames();
     colorDOM();
   });
 };
 
-// make button behaviour and stuff
-const toggleDarkMode = (function() {
-  darkModeToggle.addEventListener("click", function(e) {
-    if (darkModeToggle.checked == true) {
-      document.querySelector("html").classList.toggle("dark");
-    } else {
-      document.querySelector("html").classList.toggle("dark");
-    }
-  });
-})();
+darkModeToggle.addEventListener("click", function (e) {
+  if (darkModeToggle.checked == true) {
+    document.querySelector("html").classList.toggle("dark");
+  } else {
+    document.querySelector("html").classList.toggle("dark");
+  }
+});
 
-reloadBtn.addEventListener("click", function(e) {
-  // init();
+reloadBtn.addEventListener("click", function (e) {
+  window.location.pathname = "";
   colorInit();
   getColorNames();
   colorDOM();
 });
 
-const copyColor = function() {
+const copyColor = function () {
   for (let i = 0; i < hexContainers.length; i++) {
     let hexContainer = hexContainers[i];
-    hexContainer.addEventListener("click", function(e) {
+    hexContainer.addEventListener("click", function (e) {
       let hexCode = e.target.innerHTML;
       navigator.clipboard.writeText(hexCode).then(
-        function() {
+        function () {
           e.target.innerHTML = "Copied!";
-          setTimeout(function() {
+          setTimeout(function () {
             e.target.innerHTML = hexCode;
           }, 1000);
         },
-        function() {
+        function () {
           console.log("sry bro");
         }
       );

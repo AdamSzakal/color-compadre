@@ -321,7 +321,7 @@ var global = arguments[3];
     };
 
     chroma.Color = Color_1;
-    chroma.version = '2.0.6';
+    chroma.version = '2.1.0';
 
     var chroma_1 = chroma;
 
@@ -862,7 +862,7 @@ var global = arguments[3];
     var rgb2hex_1 = rgb2hex;
 
     var RE_HEX = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-    var RE_HEXA = /^#?([A-Fa-f0-9]{8})$/;
+    var RE_HEXA = /^#?([A-Fa-f0-9]{8}|[A-Fa-f0-9]{4})$/;
 
     var hex2rgb = function (hex) {
         if (hex.match(RE_HEX)) {
@@ -884,9 +884,14 @@ var global = arguments[3];
 
         // match rgba hex format, eg #FF000077
         if (hex.match(RE_HEXA)) {
-            if (hex.length === 9) {
+            if (hex.length === 5 || hex.length === 9) {
                 // remove optional leading #
                 hex = hex.substr(1);
+            }
+            // expand short-notation to full eight-digit
+            if (hex.length === 4) {
+                hex = hex.split('');
+                hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3];
             }
             var u$1 = parseInt(hex, 16);
             var r$1 = u$1 >> 24 & 0xFF;
@@ -928,7 +933,7 @@ var global = arguments[3];
             var rest = [], len = arguments.length - 1;
             while ( len-- > 0 ) rest[ len ] = arguments[ len + 1 ];
 
-            if (!rest.length && type$5(h) === 'string' && [3,4,6,7,8,9].includes(h.length)) {
+            if (!rest.length && type$5(h) === 'string' && [3,4,5,6,7,8,9].indexOf(h.length) >= 0) {
                 return 'hex';
             }
         }
@@ -2238,14 +2243,19 @@ var global = arguments[3];
     var sin$1 = Math.sin;
     var atan2$1 = Math.atan2;
 
-    var average = function (colors, mode) {
+    var average = function (colors, mode, weights) {
         if ( mode === void 0 ) mode='lrgb';
+        if ( weights === void 0 ) weights=null;
 
         var l = colors.length;
+        if (!weights) { weights = Array.from(new Array(l)).map(function () { return 1; }); }
+        // normalize weights
+        var k = l / weights.reduce(function(a, b) { return a + b; });
+        weights.forEach(function (w,i) { weights[i] *= k; });
         // convert colors to Color objects
         colors = colors.map(function (c) { return new Color_1(c); });
         if (mode === 'lrgb') {
-            return _average_lrgb(colors)
+            return _average_lrgb(colors, weights)
         }
         var first = colors.shift();
         var xyz = first.get(mode);
@@ -2254,28 +2264,28 @@ var global = arguments[3];
         var dy = 0;
         // initial color
         for (var i=0; i<xyz.length; i++) {
-            xyz[i] = xyz[i] || 0;
-            cnt.push(isNaN(xyz[i]) ? 0 : 1);
+            xyz[i] = (xyz[i] || 0) * weights[0];
+            cnt.push(isNaN(xyz[i]) ? 0 : weights[0]);
             if (mode.charAt(i) === 'h' && !isNaN(xyz[i])) {
                 var A = xyz[i] / 180 * PI$1;
-                dx += cos$2(A);
-                dy += sin$1(A);
+                dx += cos$2(A) * weights[0];
+                dy += sin$1(A) * weights[0];
             }
         }
 
-        var alpha = first.alpha();
-        colors.forEach(function (c) {
+        var alpha = first.alpha() * weights[0];
+        colors.forEach(function (c,ci) {
             var xyz2 = c.get(mode);
-            alpha += c.alpha();
+            alpha += c.alpha() * weights[ci+1];
             for (var i=0; i<xyz.length; i++) {
                 if (!isNaN(xyz2[i])) {
-                    cnt[i]++;
+                    cnt[i] += weights[ci+1];
                     if (mode.charAt(i) === 'h') {
                         var A = xyz2[i] / 180 * PI$1;
-                        dx += cos$2(A);
-                        dy += sin$1(A);
+                        dx += cos$2(A) * weights[ci+1];
+                        dy += sin$1(A) * weights[ci+1];
                     } else {
-                        xyz[i] += xyz2[i];
+                        xyz[i] += xyz2[i] * weights[ci+1];
                     }
                 }
             }
@@ -2296,13 +2306,12 @@ var global = arguments[3];
     };
 
 
-    var _average_lrgb = function (colors) {
+    var _average_lrgb = function (colors, weights) {
         var l = colors.length;
-        var f = 1/l;
         var xyz = [0,0,0,0];
-        for (var i = 0, list = colors; i < list.length; i += 1) {
-            var col = list[i];
-
+        for (var i=0; i < colors.length; i++) {
+            var col = colors[i];
+            var f = weights[i] / l;
             var rgb = col._rgb;
             xyz[0] += pow$4(rgb[0],2) * f;
             xyz[1] += pow$4(rgb[1],2) * f;
@@ -3345,10 +3354,7 @@ var _chromaJs = _interopRequireDefault(require("chroma-js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // initate variables
-var responseData = [],
-    hash = window.location.hash,
-    startingColor = "",
-    endingColor = "";
+var responseData = [];
 var colors = [],
     columns = document.querySelectorAll("section"),
     containers = document.querySelectorAll(".container"),
@@ -3358,57 +3364,50 @@ var colors = [],
     noOfColumns = columns.length,
     noOfRows = containers.length / noOfColumns,
     reloadBtn = document.querySelector("#reload"),
-    darkModeToggle = document.querySelector("#darkmodetoggle"),
-    copyBtn = document.querySelector("#copy");
-
-var updateURL = function updateURL(startingColor, endingColor) {
-  // Update URL with base colors
-  // Update history with base colors
-  window.history.pushState("Color Compadre", "/" + startingColor + "/" + endingColor); //Update title
-
-  document.title = "Color Compadre: " + startingColor + "/" + endingColor;
-}; // initiate colors to work with
-
+    darkModeToggle = document.querySelector("#darkmodetoggle");
 
 var colorInit = function colorInit() {
-  var colorFunc = _chromaJs.default.scale([_chromaJs.default.random(), _chromaJs.default.random()]).mode("lch"); // check if URL contains color values already
+  var color1 = "";
+  var color2 = "";
+  var colorFunc = ""; //check if url contains color params
 
-
-  if (hash == "") {
-    startingColor = colorFunc(0);
-    endingColor = colorFunc(1);
-    updateURL(startingColor, endingColor);
-    console.log("no URL flags");
+  if (window.location.pathname == "/") {
+    color1 = _chromaJs.default.random();
+    color2 = _chromaJs.default.random();
+    colorFunc = _chromaJs.default.scale([color1, color2]);
   } else {
-    var baseColors = hash.split("/");
-    startingColor = baseColors[1];
-    endingColor = baseColors[0];
-    updateURL(startingColor, endingColor);
-    console.log("has URL flags");
+    var urlColorVariables = window.location.pathname.substr(1).split("/");
+    color1 = urlColorVariables[0];
+    color2 = urlColorVariables[1];
+    colorFunc = _chromaJs.default.scale([color1, color2]);
   }
 
-  var getColors = function getColors() {
-    //get base hue for each column, then generate the color scale to black/white for each
-    for (var i = 0; i < noOfColumns; i++) {
-      var columnBaseColor = colorFunc(i / noOfColumns);
+  ; // after getting base colors and a scale between them, generate lightness scales for each
 
-      var columnLightnessScale = _chromaJs.default.scale(["white", columnBaseColor, "black"]).mode("lch");
+  for (var i = 0; i < noOfColumns; i++) {
+    var columnBaseColor = colorFunc(i / noOfColumns);
 
-      var columnColors = [];
+    var columnLightnessScale = _chromaJs.default.scale(["white", columnBaseColor, "black"]).mode("lch");
 
-      for (var j = 0; j < noOfRows; j++) {
-        columnColors.push(columnLightnessScale(j / noOfRows + 0.05).hex());
-      }
+    var columnColors = [];
 
-      colors[i] = columnColors;
+    for (var j = 0; j < noOfRows; j++) {
+      columnColors.push(columnLightnessScale(j / noOfRows + 0.05).hex());
     }
-  };
 
-  getColors();
+    colors[i] = columnColors;
+  } // if pathname is empty, update url with it
+
+
+  if (window.location.pathname == "/") {
+    var urlSafeColor1 = color1.toString().substr(1);
+    var urlSafeColor2 = color2.toString().substr(1); // window.history.replaceState("", "", urlSafeColor1 + "/" + urlSafeColor2);
+
+    window.location.pathname = urlSafeColor1 + "/" + urlSafeColor2;
+  }
 };
 
 var getColorNames = function getColorNames() {
-  // Get color names from API
   var flatColors = colors.join(",");
   var reqCol = flatColors.replace(/#/g, "");
   var request = new XMLHttpRequest();
@@ -3427,8 +3426,7 @@ var getColorNames = function getColorNames() {
   };
 
   request.send();
-}; // use colors on DOM
-
+};
 
 var colorDOM = function colorDOM() {
   var counter = 0;
@@ -3440,8 +3438,7 @@ var colorDOM = function colorDOM() {
       counter++;
     }
   }
-}; // initate app
-
+};
 
 var init = function init() {
   document.addEventListener("DOMContentLoaded", function () {
@@ -3449,21 +3446,17 @@ var init = function init() {
     getColorNames();
     colorDOM();
   });
-}; // make button behaviour and stuff
+};
 
-
-var toggleDarkMode = function () {
-  darkModeToggle.addEventListener("click", function (e) {
-    if (darkModeToggle.checked == true) {
-      document.querySelector("html").classList.toggle("dark");
-    } else {
-      document.querySelector("html").classList.toggle("dark");
-    }
-  });
-}();
-
+darkModeToggle.addEventListener("click", function (e) {
+  if (darkModeToggle.checked == true) {
+    document.querySelector("html").classList.toggle("dark");
+  } else {
+    document.querySelector("html").classList.toggle("dark");
+  }
+});
 reloadBtn.addEventListener("click", function (e) {
-  // init();
+  window.location.pathname = "";
   colorInit();
   getColorNames();
   colorDOM();
@@ -3516,7 +3509,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63159" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61633" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -3547,9 +3540,8 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
         assetsToAccept.forEach(function (v) {
           hmrAcceptRun(v[0], v[1]);
         });
-      } else if (location.reload) {
-        // `location` global exists in a web worker context but lacks `.reload()` function.
-        location.reload();
+      } else {
+        window.location.reload();
       }
     }
 
